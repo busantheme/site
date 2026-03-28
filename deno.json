@@ -1,0 +1,23 @@
+{
+  "name": "busan-theme",
+  "exports" : "./.",
+  "tasks": {
+    "dev": "deno run -A npm:svelte-kit@latest dev",
+    "build": "deno run -A npm:svelte-kit@latest build",
+    "preview": "deno run -A npm:svelte-kit@latest preview",
+    "check": "deno run -A npm:svelte-kit@latest sync && deno run -A npm:svelte-check@latest --tsconfig ./jsconfig.json"
+  },
+  "imports": {
+    "$lib/": "./src/lib/",
+    "@sveltejs/kit": "npm:@sveltejs/kit@^2.50.2",
+    "@sveltejs/adapter-auto": "npm:@sveltejs/adapter-auto@^7.0.0",
+    "svelte": "npm:svelte@^5.54.0",
+    "vite": "npm:vite@^7.3.1"
+  },
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "enable": true
+  },
+  "nodeModulesDir": "auto"
+}
