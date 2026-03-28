@@ -1,4 +1,5 @@
-import { join } from 'npm:path'; // Using npm:path for consistency with other npm imports
+import { join } from 'node:path';
+import { readFileSync } from 'node:fs';
 
 /** @typedef {import('$lib/types').ThemeData} ThemeData */
 
@@ -21,13 +22,8 @@ function parseToml(content) {
                 result[currentSection] = currentObj;
             }
             currentSection = trimmed.slice(1, -1);
-<<<<<<< HEAD
             currentObj = /** @type {Record<string, string>} */ ({});
         } else if (currentSection && trimmed.includes('=')) {
-=======
-            currentObj = {};
-        } else if (trimmed.includes('=')) {
->>>>>>> c0e4d4d3006931a353e38b8374c25b2ffac16199
             const [key, ...valueParts] = trimmed.split('=');
             const value = valueParts.join('=').trim().replace(/^['"]|['"]$/g, '');
             currentObj[key.trim()] = value;
@@ -41,7 +37,6 @@ function parseToml(content) {
     return result;
 }
 
-<<<<<<< HEAD
 /**
  * @returns {ThemeData}
  */
@@ -51,13 +46,6 @@ export function loadTheme() {
         const content = readFileSync(tomlPath, 'utf-8');
         const parsedTheme = parseToml(content);
         return /** @type {ThemeData} */ (parsedTheme);
-=======
-export async function getTheme() {
-    try {
-        const tomlPath = join(Deno.cwd(), '..', 'theme.toml');
-        const content = await Deno.readTextFile(tomlPath);
-        return parseToml(content);
->>>>>>> c0e4d4d3006931a353e38b8374c25b2ffac16199
     } catch (e) {
         return {
             theme: { name: 'busan', version: '0.1.0' },

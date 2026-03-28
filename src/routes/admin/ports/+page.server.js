@@ -2,7 +2,12 @@ import { fail, redirect } from '@sveltejs/kit';
 import { getPorts, addPort, deletePort } from '$lib/ports.js';
 import { hasRedis } from '$lib/redis.js';
 
-const isVercel = !!Deno.env.get('VERCEL');
+const getEnv =
+    typeof Deno !== 'undefined'
+        ? (key) => Deno.env.get(key)
+        : (key) => process.env?.[key];
+
+const isVercel = !!getEnv('VERCEL');
 
 export async function load({ cookies }) {
     const session = cookies.get('admin_session');

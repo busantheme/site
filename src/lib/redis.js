@@ -1,7 +1,11 @@
 import { Redis } from '@upstash/redis';
 
+const getEnv = typeof Deno !== 'undefined'
+	? (key) => Deno.env.get(key)
+	: (key) => process.env?.[key];
+
 const hasRedis =
-	!!Deno.env.get('UPSTASH_REDIS_REST_URL') && !!Deno.env.get('UPSTASH_REDIS_REST_TOKEN');
+	!!getEnv('UPSTASH_REDIS_REST_URL') && !!getEnv('UPSTASH_REDIS_REST_TOKEN');
 
 const redis = hasRedis ? Redis.fromEnv() : null;
 
