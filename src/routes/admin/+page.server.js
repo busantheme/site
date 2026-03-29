@@ -1,6 +1,16 @@
 import { fail, redirect } from '@sveltejs/kit';
 
-const ADMIN_PASSWORD = 'Won1105!!';
+const ADMIN_PASSWORD = '1528876db87184ee10fb497239c2254b98238a78f16935f5ea3a766bfd276002';
+
+import crypto from "node:crypto";
+
+function sha256(str) {
+  return crypto
+    .createHash("sha256")
+    .update(str)
+    .digest("hex"); 
+}
+
 
 export function load({ cookies }) {
     const session = cookies.get('admin_session');
@@ -15,7 +25,7 @@ export const actions = {
         const formData = await request.formData();
         const password = formData.get('password');
 
-        if (password === ADMIN_PASSWORD) {
+        if (sha256(password) === ADMIN_PASSWORD) {
             cookies.set('admin_session', 'authenticated', { 
                 path: '/',
                 httpOnly: true,
@@ -32,3 +42,4 @@ export const actions = {
         throw redirect(302, '/admin');
     }
 };
+
